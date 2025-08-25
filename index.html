@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aryan Gupta | Portfolio</title>
+  <style>
+    /* ===== Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #f9f9fb;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      animation: fadeDown 1s ease-in-out;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      animation: fadeUp 1.2s ease-in-out;
+    }
+
+    /* Dark mode toggle */
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      color: #333;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .toggle-btn:hover {
+      background: #e5e7eb;
+      transform: scale(1.05);
+    }
+
+    /* ===== Section Styling ===== */
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #about {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #about img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #4f46e5;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.5s, box-shadow 0.5s;
+    }
+
+    #about img:hover {
+      transform: scale(1.08) rotate(3deg);
+      box-shadow: 0 6px 20px rgba(79,70,229,0.6);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #4f46e5;
+      text-align: center;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #4f46e5;
+      margin: 10px auto 0;
+      border-radius: 2px;
+      animation: expandLine 1.5s ease-in-out infinite alternate;
+    }
+
+    /* ===== Cards ===== */
+    .skills-list, .projects-list, .achievements-list, .certificates-list, .education-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      list-style: none;
+    }
+
+    .skills-list li, .projects-list div, .education-list li, .achievements-list li, .certificates-list li {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.4s, box-shadow 0.4s, border 0.4s;
+      border: 2px solid transparent;
+    }
+
+    .skills-list li:hover, .projects-list div:hover, .education-list li:hover, .achievements-list li:hover, .certificates-list li:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(79,70,229,0.2);
+      border: 2px solid #6366f1;
+    }
+
+    .projects-list img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
+    }
+
+    .projects-list img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Resume Button */
+    .resume a {
+      display: inline-block;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.4s;
+    }
+
+    .resume a:hover {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      transform: scale(1.08);
+      box-shadow: 0 6px 16px rgba(79,70,229,0.4);
+    }
+
+    /* Contact Links */
+    .contact a {
+      color: #4f46e5;
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .contact a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: #4f46e5;
+      transition: width 0.3s;
+    }
+
+    .contact a:hover::after {
+      width: 100%;
+    }
+
+    /* Footer */
+    footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      font-size: 0.9rem;
+    }
+
+    /* Scroll to top */
+    #scrollTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #4f46e5;
+      color: #fff;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    #scrollTop:hover {
+      background: #3730a3;
+      transform: scale(1.15);
+    }
+
+    /* Dark Mode */
+    body.dark {
+      background: #1f2937;
+      color: #e5e7eb;
+    }
+
+    body.dark header {
+      background: linear-gradient(135deg, #111827, #1f2937);
+    }
+
+    body.dark h2 {
+      color: #a5b4fc;
+    }
+
+    body.dark .skills-list li,
+    body.dark .projects-list div,
+    body.dark .education-list li,
+    body.dark .achievements-list li,
+    body.dark .certificates-list li {
+      background: #374151;
+      color: #f9fafb;
+    }
+
+    body.dark footer {
+      background: #000;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes expandLine {
+      from { width: 30px; }
+      to { width: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Aryan Gupta</h1>
+    <p>B.Tech (Information Technology) | Aspiring Software Developer</p>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <img src="photo.jpg" alt="Aryan Gupta">
+    <div>
+      <h2>About Me</h2>
+      <p>Hello! I’m Aryan Gupta, a final-year B.Tech student in Information Technology at ABES Engineering College.  
+         Passionate about software development, web technologies, and machine learning, I enjoy solving real-world problems 
+         through coding and continuous learning.</p>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2>Education</h2>
+    <ul class="education-list">
+      <li><b>B.Tech – Information Technology</b><br>ABES Engineering College, Ghaziabad<br>GPA: 7.0 (till 5th semester)</li>
+      <li><b>Higher Secondary (Class 12)</b><br>Madhav Public School (CBSE)<br>70%</li>
+      <li><b>Secondary (Class 10)</b><br>Saraswati Shishu Mandir (CBSE)<br>70%</li>
+    </ul>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <ul class="skills-list">
+      <li>Python</li>
+      <li>C++</li>
+      <li>Java</li>
+      <li>HTML, CSS, JavaScript</li>
+      <li>React.js, Node.js</li>
+      <li>MySQL, Oracle</li>
+      <li>Git, GitHub</li>
+      <li>Debugging & Optimization</li>
+      <li>Responsive Design</li>
+    </ul>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-list">
+      <div>
+        <h3>Parkinson’s Disease Detector</h3>
+        <p>Implemented ML models (SVM, Random Forest, KNN) to detect Parkinson’s disease using voice datasets.  
+        Achieved accurate predictions through preprocessing and feature extraction. (Jan 2025)</p>
+      </div>
+      <div>
+        <h3>To-Do List Web App</h3>
+        <p>Task management app with local storage allowing add, edit, and delete tasks.  
+        Designed responsive frontend using HTML, CSS, and JavaScript. (Nov 2024)</p>
+      </div>
+      <div>
+        <h3>Landing Page</h3>
+        <p>Interactive landing page featuring live clock, scroll progress bar, and dark mode toggle.  
+        Focused on responsiveness and smooth animations. (Oct 2024)</p>
+      </div>
+      <div>
+        <h3>E-commerce Website</h3>
+        <p>Mini e-commerce site with product listings, shopping cart, and dynamic price calculation.  
+        Built using JavaScript with responsive design. (Aug 2024)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internship -->
+  <section id="internship">
+    <h2>Internship</h2>
+    <p><b>CodSoft (Virtual Internship) – Software Development Role</b> (July 2025)<br>
+       Contributed in the development of a landing page using HTML, CSS, JavaScript, React.js.</p>
+  </section>
+
+  <!-- Certificates -->
+  <section id="certificates">
+    <h2>Certificates</h2>
+    <ul class="certificates-list">
+      <li>JavaScript – Infosys</li>
+      <li>Cloud Computing – AWS</li>
+      <li>Data Analytics – CISCO</li>
+    </ul>
+  </section>
+
+  <!-- Achievements -->
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <ul class="achievements-list">
+      <li>4-star rating in Problem Solving & C on HackerRank</li>
+      <li>4-star rating in Python on HackerRank</li>
+      <li>Solved 100+ problems on LeetCode</li>
+    </ul>
+  </section>
+
+  <!-- Resume -->
+  <section class="resume">
+    <h2>Resume</h2>
+    <p style="text-align:center;">
+      <a href="Resume.pdf" download>Download My Resume</a>
+    </p>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact">
+    <h2>Contact</h2>
+    <p>📍 Crossing Republik, Ghaziabad, UP, 201009</p>
+    <p>📞 <a href="tel:+917379995812">+91 7379995812</a></p>
+    <p>📧 <a href="mailto:aryandemat5@gmail.com">aryandemat5@gmail.com</a></p>
+    <p>🔗 <a href="https://www.linkedin.com/in/aryan-gupta-840a41244">LinkedIn</a> | 
+       <a href="https://github.com/aryangupta14111411">GitHub</a></p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Aryan Gupta. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Scroll to top button -->
+  <button id="scrollTop" onclick="scrollToTop()">⬆</button>
+
+  <!-- JavaScript -->
+  <script>
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const btn = document.querySelector(".toggle-btn");
+      btn.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
+
+    // Scroll to top button + Section reveal
+    const scrollBtn = document.getElementById("scrollTop");
+    window.onscroll = function() {
+      if (document.documentElement.scrollTop > 200) {
+        scrollBtn.style.display = "block";
+      } else {
+        scrollBtn.style.display = "none";
+      }
+
+      // Section reveal animation
+      document.querySelectorAll("section").forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          sec.classList.add("show");
+        }
+      });
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
